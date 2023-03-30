@@ -1,0 +1,39 @@
+metricbeat.config.modules:
+  path: /etc/metricbeat/modules.d/*.yml
+  reload.period: 30
+  reload.enabled: true
+metricbeat.max_start_delay: 0
+
+metricbeat.modules:
+- module: system
+  metricsets:
+    - cpu             # CPU usage
+    - filesystem      # File system usage for each mountpoint
+    #- fsstat          # File system summary metrics
+    #- load            # CPU load averages
+    - memory          # Memory usage
+    #- network         # Network IO
+    #- process         # Per process metrics
+    #- process_summary # Process summary
+    #- uptime          # System Uptime
+    #- core           # Per CPU core usage
+    #- diskio         # Disk IO
+    #- socket         # Sockets and connection info (linux only)
+  fields_under_root: true
+  fields:
+      index: metricbeat-_INDEX_
+      source_ip: _IP_-beats
+  enabled: true
+  period: 30s
+  #processes: ['.*']
+  #cpu.metrics:  ["percentages"]  # The other available options are normalized_percentages and ticks.
+  #core.metrics: ["percentages"]  # The other available option is ticks.
+  #process.include_top_n:
+  #  enabled: true
+  #  by_cpu: 10
+  #  by_memory: 10
+  #process.cmdline.cache.enabled: true
+  #process.cgroups.enabled: true
+
+output.logstash:
+   hosts: ["10.249.20.159:_PORT_METRIC"]

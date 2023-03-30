@@ -1,0 +1,12 @@
+filebeat.prospectors:
+- input_type: log
+  paths:
+    -  /DATA/API_CBIO/API_CBIO_LOGS/access.log
+	-  /DATA/API_CBIO/API_CBIO_LOGS/error.log
+  fields_under_root: true
+  fields:
+      index: _INDEX_
+      source_ip: _IP_
+
+output.logstash:
+  hosts: ["10.249.20.159:_PORT_"]
